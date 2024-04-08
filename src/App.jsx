@@ -4,11 +4,25 @@ import Player from "./components/Player";
 import { useState } from "react";
 
 function App() {
-  const [log, setLog] = useState([]); 
+  const [log, setLog] = useState([]);
   const [activePlayer, setActivePlayer] = useState("X");
 
-  function handleActivedPlayer() {
+  function handleActivedPlayer(rowIndex, cellIndex) {
     setActivePlayer((prev) => (prev === "X" ? "O" : "X"));
+    setLog((prev) => {
+      let currentPlayer = "X";
+
+      if (prev.length > 0 && prev[0].player === "X") {
+        currentPlayer = "O";
+      }
+
+      const updatedLog = [
+        { square: { row: rowIndex, col: cellIndex }, player: currentPlayer },
+        ...prev,
+      ];
+
+      return updatedLog;
+    });
   }
 
   return (
@@ -29,10 +43,9 @@ function App() {
           </ol>
           <GameBoard
             onSelectedSquare={handleActivedPlayer}
-            symbolPlayer={activePlayer}
           />
         </div>
-        <Log/>
+        <Log />
       </main>
     </>
   );
