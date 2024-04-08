@@ -1,8 +1,10 @@
 import GameBoard from "./components/GameBoard";
+import Log from "./components/Log";
 import Player from "./components/Player";
 import { useState } from "react";
 
 function App() {
+  const [log, setLog] = useState([]); 
   const [activePlayer, setActivePlayer] = useState("X");
 
   function handleActivedPlayer() {
@@ -30,7 +32,7 @@ function App() {
             symbolPlayer={activePlayer}
           />
         </div>
-        Log
+        <Log/>
       </main>
     </>
   );
