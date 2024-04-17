@@ -2,6 +2,7 @@ import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
 import Player from "./components/Player";
 import { useState } from "react";
+import { WINNING_COMBINATIONS } from "./winning-combination";
 
 function derivatedPlayer(log) {
   let currentPlayer = "X";
