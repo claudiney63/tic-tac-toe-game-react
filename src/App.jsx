@@ -46,7 +46,7 @@ function App() {
             turns={log}
           />
         </div>
-        <Log />
+        <Log turns={log}/>
       </main>
     </>
   );
