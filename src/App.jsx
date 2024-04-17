@@ -4,6 +4,12 @@ import Player from "./components/Player";
 import { useState } from "react";
 import { WINNING_COMBINATIONS } from "./winning-combination";
 
+const initialBoard = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null],
+];
+
 function derivatedPlayer(log) {
   let currentPlayer = "X";
 
@@ -20,7 +26,24 @@ function App() {
 
   const activePlayer = derivatedPlayer(log);
 
+  let gameBoard = initialBoard
+
+  for (const turn of log) {
+    const {square, player} = turn
+    const { row, col } = square
+
+    gameBoard[row][col] = player
+  }
+
+  for (combination of WINNING_COMBINATIONS) {
+    const firstSquare = 0;
+    const secondSquare = 0;
+    const thirdSquare = 0;
+  }
+
   function handleActivedPlayer(rowIndex, cellIndex) {
+
+
     // setActivePlayer((prev) => (prev === "X" ? "O" : "X"));
     setLog((prev) => {
       
@@ -53,7 +76,7 @@ function App() {
           </ol>
           <GameBoard
             onSelectedSquare={handleActivedPlayer}
-            turns={log}
+            board={gameBoard}
           />
         </div>
         <Log turns={log}/>
