@@ -3,18 +3,27 @@ import Log from "./components/Log";
 import Player from "./components/Player";
 import { useState } from "react";
 
+function derivatedPlayer(log) {
+  let currentPlayer = "X";
+
+  if (log.length > 0 && log[0].player === "X") {
+    currentPlayer = "O";
+  }
+
+  return currentPlayer
+}
+
 function App() {
   const [log, setLog] = useState([]);
-  const [activePlayer, setActivePlayer] = useState("X");
+  // const [activePlayer, setActivePlayer] = useState("X");
+
+  const activePlayer = derivatedPlayer(log);
 
   function handleActivedPlayer(rowIndex, cellIndex) {
-    setActivePlayer((prev) => (prev === "X" ? "O" : "X"));
+    // setActivePlayer((prev) => (prev === "X" ? "O" : "X"));
     setLog((prev) => {
-      let currentPlayer = "X";
-
-      if (prev.length > 0 && prev[0].player === "X") {
-        currentPlayer = "O";
-      }
+      
+      const currentPlayer = derivatedPlayer(prev);
 
       const updatedLog = [
         { square: { row: rowIndex, col: cellIndex }, player: currentPlayer },
