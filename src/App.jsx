@@ -22,6 +22,10 @@ function derivatedPlayer(log) {
 }
 
 function App() {
+  const [players, setPlayers] = useState({
+    'X': 'Player 1',
+    'O': 'Player 2'
+  }) // [player1, player2
   const [log, setLog] = useState([]);
   // const [activePlayer, setActivePlayer] = useState("X");
 
@@ -69,6 +73,13 @@ function App() {
 
   function handleRestatGame() {
     setLog([]);
+  }
+
+  function newNamePlayer(symbol, newName) {
+    setPlayers((prev) => ({
+      ...prev,
+      [symbol]: newName
+    }))
   }
 
   return (
