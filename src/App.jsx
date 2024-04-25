@@ -27,7 +27,7 @@ function App() {
 
   const activePlayer = derivatedPlayer(log);
 
-  let gameBoard = initialBoard
+  let gameBoard = [...initialBoard.map(arr => [...arr])]
 
   for (const turn of log) {
     const {square, player} = turn
@@ -67,6 +67,10 @@ function App() {
     });
   }
 
+  function handleRestatGame() {
+    setLog([]);
+  }
+
   return (
     <>
       <main>
@@ -83,7 +87,7 @@ function App() {
               activedPlayer={activePlayer === "O"}
             />
           </ol>
-          {(winner || hasDraw) && <GameOver winner={winner}/>}
+          {(winner || hasDraw) && <GameOver winner={winner} onRestatGame={handleRestatGame}/>}
           <GameBoard
             onSelectedSquare={handleActivedPlayer}
             board={gameBoard}
