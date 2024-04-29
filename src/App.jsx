@@ -5,6 +5,11 @@ import { useState } from "react";
 import { WINNING_COMBINATIONS } from "./winning-combination";
 import GameOver from "./components/GameOver";
 
+const PLAYERS = {
+  X: "Player 1",
+  O: "Player 2",
+}
+
 const initialBoard = [
   [null, null, null],
   [null, null, null],
@@ -21,16 +26,7 @@ function derivatedPlayer(log) {
   return currentPlayer
 }
 
-function App() {
-  const [players, setPlayers] = useState({
-    'X': 'Player 1',
-    'O': 'Player 2'
-  }) // [player1, player2
-  const [log, setLog] = useState([]);
-  // const [activePlayer, setActivePlayer] = useState("X");
-
-  const activePlayer = derivatedPlayer(log);
-
+function derivatedGameBoard(log) {
   let gameBoard = [...initialBoard.map(arr => [...arr])]
 
   for (const turn of log) {
@@ -39,7 +35,10 @@ function App() {
 
     gameBoard[row][col] = player
   }
+  return gameBoard
+}
 
+function derivatedWinner(gameBoard, players) {
   let winner = null
 
   for (const combination of WINNING_COMBINATIONS) {
@@ -52,12 +51,23 @@ function App() {
     }
   }
 
+  return winner
+}
+
+function App() {
+  const [players, setPlayers] = useState(PLAYERS) 
+  const [log, setLog] = useState([]);
+
+  const activePlayer = derivatedPlayer(log);
+
+  const gameBoard = derivatedGameBoard(log)
+
+  const winner = derivatedWinner(gameBoard, players)
+
   let hasDraw = log.length === 9 && !winner
 
   function handleActivedPlayer(rowIndex, cellIndex) {
 
-
-    // setActivePlayer((prev) => (prev === "X" ? "O" : "X"));
     setLog((prev) => {
       
       const currentPlayer = derivatedPlayer(prev);
@@ -88,13 +98,13 @@ function App() {
         <div id="game-container">
           <ol id="players" className="highlight-player">
             <Player
-              name="Player 1"
+              name={PLAYERS.X}
               symbol="X"
               activedPlayer={activePlayer === "X"}
               editPlayerName={newNamePlayer}
             />
             <Player
-              name="Player 2"
+              name={PLAYERS.O}
               symbol="O"
               activedPlayer={activePlayer === "O"}
               editPlayerName={newNamePlayer}
